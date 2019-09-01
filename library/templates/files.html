@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+        <!-- <h2>Approve Photos Page!</h2> -->
+        <div class="container">
+			    <div class="col-12-xs">
+			      <h3>Bucket Info</h3>
+			      <!-- <p>Created: {{ my_bucket.creation_date }}</p> -->
+
+			      <hr>
+			      <form class="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+						  <p><input type="file" name="image"></p>
+						  <button type="submit" class="btn btn-primary">Upload</button>
+						</form>
+			      <img src="{{ image }}"> 
+
+			      {% for f in files %}
+			      {{ f.key }}<br>
+			      {{ f.last_modified }}<hr>
+			      {% endfor %}
+
+			    </div>
+			  </div>
+{% endblock %}

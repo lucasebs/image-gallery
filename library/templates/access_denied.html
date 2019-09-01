@@ -1,0 +1,9 @@
+{% block content %}
+		<br>
+		<br>
+        <h1>Access is denied!</h1>
+        <br>
+        <h2>Sorry {{ current_user.get_name()}}, you do not have permission to access the page...</h2>
+        <br>
+        <h3><a href="{{ url_for('home')}}">Back to Wedding Gallery</a></h3>
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+<style type="text/css">
+
+
+.card {
+  /*border-radius: 15px;*/
+  /*position: relative;*/
+  display: flex;
+  transition: 0.4s ease-out;
+}
+.card:hover {
+  -webkit-transform: translateY(5px);
+          transform: translateY(5px);
+}
+.card:hover:before {
+  opacity: 1;
+}
+.card:hover .info {
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+          transform: translateY(0px);
+}
+.card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  transition: 0.5s;
+  opacity: 0;
+}
+.card img {
+  position: relative;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+}
+.card .info {
+  position: relative;
+  z-index: 3;
+  color: white;
+  opacity: 0;
+  -webkit-transform: translateY(30px);
+          transform: translateY(30px);
+  transition: 0.5s;
+}
+.card .info h1 {
+  margin: 0px;
+}
+.card .info p {
+  letter-spacing: 1px;
+  font-size: 15px;
+  margin-top: 8px;
+}
+.card .info button {
+  padding: 0.6rem;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  background: white;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+.card .info button:hover {
+  background: rgba(255, 99, 71, 0.8);
+  color: white;
+}
+
+
+</style>
+
+
+        <!-- <h2>You are in homepage!</h2> -->
+    <div class="gallery">
+    	<nav class="navbar navbar-expand-md navbar-fixed-top navbar-light" role="navigation">
+    		<div id="navbar navbar-right" >  
+          <ul class="nav navbar-nav navbar-right">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-primary p-3 mb-2 bg-light btn-sm" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ sort }} <i class="fa fa-sort"></i>
+                </a>
+	                <div class="sort-dropdown dropdown-menu dropdown-menu-left dropdown-default"
+	                  aria-labelledby="navbarDropdownMenuLink-333">
+	                  <form action="" method="post" name="sort-gallery newest-to-older">
+		                  <input type="hidden" name="id" value="newest-to-older">
+		                  <button class='btn btn-link btn-sm' style='background-color:transparent;'>Newest to Older</button>
+	                  </form>
+                		<form action="" method="post" name="sort-gallery older-to-newest">
+		                  <input type="hidden" name="id" value="older-to-newest">
+		                  <button class='btn btn-link btn-sm' style='background-color:transparent;'>Older to Newst</button>
+                		</form>
+                		<form action="" method="post" name="sort-gallery likes-asc">
+		                  <input type="hidden" name="id" value="likes-asc">
+		                  <button class='btn btn-link btn-sm' style='background-color:transparent;'>Likes Asc.</button>
+		                </form>
+	                  <form action="" method="post" name="sort-gallery likes-desc">
+	              	    <input type="hidden" name="id" value="likes-desc">
+	            	      <button class='btn btn-link btn-sm' style='background-color:transparent;'>Likes Desc.</button>
+		                </form>	
+	                </div>
+	              
+              </li>
+          </ul>
+        </div>
+    	</nav>
+      <div class="row no-gutters">
+        <div class="card-columns" style="column-count: 2">
+          {% for photo in photos %}
+          {% set p = photo %}
+          <div class="card border-light mb-3" style="width: 39rem; height: auto;">
+            <img class="card-img-top" src="{{ p.url }}" alt="Card image cap">
+            <div class="card-img-overlay">
+              <div class="card-body info">
+                <form action="{{ url_for('like') }}" method="post" name="{{ p._id }}">
+                  <input type="hidden" name="id" value="{{ p._id }}">
+                  <button class='btn btn-lg'>
+  								   {{ p.likes }}&nbsp;&nbsp;<i class="fab fa-gratipay"></i>
+  								</button>
+                  <!-- <button type="submit" class="btn btn-success" value="submit" formmethod="post">Approve</button> -->
+                </form>
+              </div>
+            </div>
+           <!--  <div class="card-footer">
+              <div style="text-align: right;"><small class="text-muted">{{ p._id }}</small></div>
+            </div> -->
+          </div>
+            
+          {% endfor %}  
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

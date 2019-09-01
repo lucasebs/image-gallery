@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 500px;
+  vertical-align: center;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+  opacity: 10%
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+  vertical-align: center;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: left;
+  vertical-align: center;
+  size: 10px 10px 10px 10px;
+}
+
+div.image {
+  padding: 10px;
+  vertical-align: center;
+}
+</style>
+		{% if current_user.is_couple() %}
+		<div class="photograhy">
+			<div class="row no-gutters">
+				<div class="card-columns">
+					{% for photo in photos %}
+					{% set p = photo %}
+					<div class="card border-light mb-3" style="width: 40rem; height: auto;">
+					  <img class="card-img-top " src="{{ p.url }}" alt="Card image cap">
+					  <div class="card-footer">
+					  	<form action="{{ url_for('approved') }}" method="post" name="{{ p._id }}">
+					  		<input type="hidden" name="id" value="{{ p._id }}">
+					  		<button type="submit" class="btn btn-success" value="submit" formmethod="post">Approve</button>
+					  	</form>
+				      <div style="text-align: right;"><small class="text-muted">{{ p._id }}</small></div>
+				    </div>
+					</div>
+					{% endfor %}	
+				</div>
+			</div>
+		</div>                
+		{% else %}
+			{% include "access_denied.html" %}
+		{% endif %}
+
+{% endblock %}
